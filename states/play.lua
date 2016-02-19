@@ -35,6 +35,7 @@ function Play:init() -- run only once
 
     player = Player(playerSpawn.x, playerSpawn.y, 32, 32, 0, 0, 200, 64, 100, world)
     player:setAcceleration(nil,GRAVITY*player.mass)
+    player:setFriction(.00999)
 
 	world:add(player, player.x, player.y, player.w, player.h)
 
@@ -66,7 +67,7 @@ function Play:keypressed(key)
 		player:setAcceleration(100)
 		player:setDirection(1)
 	elseif key == "a" then
-		player:setAcceleration(100)
+		player:setAcceleration(-100)
 		player:setDirection(-1)
 	end
 
@@ -77,9 +78,7 @@ function Play:keypressed(key)
 end
 
 function Play:keyreleased(key)
-	if key == "d" or "a" then
-		player:setAcceleration(-player.direction*player.mass*50)
-	end
+	player:setAcceleration(0)
 end
 
 function Play:mousereleased(x,y, mouse_btn)

@@ -21,14 +21,23 @@ function Player:init(x, y, w, h, xAccel, yAccel, maxVelX, maxVelY, mass, world)
 	self.yvel = 0
 	self.direction = 1
 	self.grounded = false
+	self.friction = 0
 end
 
 function Player:update(dt)
-	self.xvel = self.xvel + self.direction*self.xAccel*dt
+	self.xvel = self.xvel + self.xAccel*dt
 	self.yvel = self.yvel + self.yAccel*dt
 
-	if self.xvel > self.maxVelX then self.xvel = self.maxVelX end
-	if self.xvel < 0 then self.xvel = 0 end
+	self.xvel = self.xvel - self.mass*self.friction*self.direction
+
+	if self.direction == 1 then
+		if self.xvel > self.maxVelX then self.xvel = self.maxVelX end
+		if self.xvel < 0 then self.xvel = 0 end
+	else
+		if self.xvel < -self.maxVelX then self.xvel = -self.maxVelX end
+		if self.xvel > 0 then self.xvel = 0 end
+	end	
+
 	if self.yvel > self.maxVelY then self.yvel = self.maxVelY end
 	if self.yvel < -self.maxVelY then self.yvel = -self.maxVelY end
 
@@ -65,6 +74,10 @@ end
 
 function Player:setDirection(direction)
 	self.direction = direction
+end
+
+function Player:setFriction( frictionConstant )
+	self.friction = frictionConstant
 end
 
 return Player
