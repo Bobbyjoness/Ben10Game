@@ -10,7 +10,7 @@ return {
   tileheight = 21,
   nextobjectid = 3,
   properties = {
-    ["friction"] = ".009999"
+    ["friction"] = ".5"
   },
   tilesets = {
     {

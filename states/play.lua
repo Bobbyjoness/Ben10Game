@@ -33,7 +33,7 @@ function Play:init() -- run only once
     -- Remove unneeded object layer
     map:removeLayer("Spawn")
 
-    player = Player(playerSpawn.x, playerSpawn.y, 32, 32, 0, 0, 200, 64, 100, world)
+    player = Player(playerSpawn.x, playerSpawn.y, 32, 32, 0, 0, 200, 200, 100, world)
     player:setAcceleration(nil,GRAVITY*player.mass)
     player:setFriction(map.properties.friction)
 
@@ -46,9 +46,16 @@ function Play:enter( previous, ... ) -- run every time the state is entered
 end
 
 function Play:update(dt)
-map:update(dt)
-	
+	map:update(dt)
 	player:update(dt)
+
+	if love.keyboard.isDown("d") then
+		player:setAcceleration(100)
+		player:setDirection(1)
+	elseif love.keyboard.isDown("a") then
+		player:setAcceleration(-100)
+		player:setDirection(-1)
+	end
 
 end
 
@@ -63,16 +70,8 @@ function Play:draw()
 end
 
 function Play:keypressed(key)
-	if key == "d" then
-		player:setAcceleration(100)
-		player:setDirection(1)
-	elseif key == "a" then
-		player:setAcceleration(-100)
-		player:setDirection(-1)
-	end
-
 	if key == "space" and player.grounded then
-		player.yvel = player.yvel - 200 --this is your jump juice
+		player:setVelocity(nil,-2000)
 		player.grounded = false
 	end
 end

@@ -28,7 +28,9 @@ function Player:update(dt)
 	self.xvel = self.xvel + self.xAccel*dt
 	self.yvel = self.yvel + self.yAccel*dt
 
-	self.xvel = self.xvel - self.mass*self.friction*self.direction
+	if self.grounded then
+		self.xvel = self.xvel - self.mass*self.friction*self.direction*dt
+	end
 
 	if self.direction == 1 then
 		if self.xvel > self.maxVelX then self.xvel = self.maxVelX end
