@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="21" tileheight="21" nextobjectid="3">
+ <properties>
+  <property name="friction" value=".009999"/>
+ </properties>
  <tileset firstgid="1" name="world" tilewidth="21" tileheight="21" spacing="2" margin="2" tilecount="900">
   <image source="../assets/spritesheet.png" width="692" height="692"/>
  </tileset>

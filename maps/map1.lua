@@ -9,7 +9,9 @@ return {
   tilewidth = 21,
   tileheight = 21,
   nextobjectid = 3,
-  properties = {},
+  properties = {
+    ["friction"] = ".009999"
+  },
   tilesets = {
     {
       name = "world",

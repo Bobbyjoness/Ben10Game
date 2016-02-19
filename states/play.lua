@@ -35,7 +35,7 @@ function Play:init() -- run only once
 
     player = Player(playerSpawn.x, playerSpawn.y, 32, 32, 0, 0, 200, 64, 100, world)
     player:setAcceleration(nil,GRAVITY*player.mass)
-    player:setFriction(.00999)
+    player:setFriction(map.properties.friction)
 
 	world:add(player, player.x, player.y, player.w, player.h)
 
