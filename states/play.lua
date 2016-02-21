@@ -1,9 +1,13 @@
 --play state 
 local Play = {}
 
-local sti = require "libs.STI"
-local bump = require "bump.bump"
+--3rd Party Libraries
+local sti    = require "libs.STI"
+local bump   = require "bump.bump"
+local Camera = require "hump.camera"
+local camera = Camera()
 
+--My code
 local Player  = require "classes.player"
 local Martian = require "classes.martian"
 local player
@@ -60,9 +64,12 @@ function Play:update(dt)
 		player:setDirection(-1)
 	end
 
+	camera:lockX(player.x)
+
 end
 
 function Play:draw()
+	camera:attach()
 	love.graphics.setColor(255,255,255)
 	map:setDrawRange(0, 0, 800, 600)
 	map:draw()
@@ -70,6 +77,7 @@ function Play:draw()
 	for i,v in ipairs(enemies) do
 		v:draw()
 	end
+	camera:detach()
 	love.graphics.setColor(255, 255, 0, 255)
 	love.graphics.setFont(love.graphics.newFont(12))
 	love.graphics.print(love.timer.getFPS())
