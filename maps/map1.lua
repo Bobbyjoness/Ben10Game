@@ -4,13 +4,15 @@ return {
   tiledversion = "0.14.1",
   orientation = "orthogonal",
   renderorder = "right-down",
-  width = 40,
+  width = 120,
   height = 40,
   tilewidth = 21,
   tileheight = 21,
-  nextobjectid = 3,
+  nextobjectid = 8,
   properties = {
-    ["friction"] = ".5"
+    ["GRAVITY"] = "9.8",
+    ["airComp"] = "Oxygen",
+    ["friction"] = "1.4"
   },
   tilesets = {
     {
@@ -30,7 +32,14 @@ return {
       properties = {},
       terrains = {},
       tilecount = 900,
-      tiles = {}
+      tiles = {
+        {
+          id = 2,
+          properties = {
+            ["hat"] = "1"
+          }
+        }
+      }
     }
   },
   layers = {
@@ -39,7 +48,7 @@ return {
       name = "collidableWorld",
       x = 0,
       y = 0,
-      width = 40,
+      width = 120,
       height = 40,
       visible = true,
       opacity = 1,
@@ -48,7 +57,7 @@ return {
       },
       encoding = "base64",
       compression = "zlib",
-      data = "eJztw0EJAAAIBLADk9i/pCV8CG6wBACATXV8q6qq6oMDlch8OQ=="
+      data = "eJztzsEJACAMALFCwT0E959Rn91ALTnI/yIkSZIkSZIk6b3GkcW6uyNJUpuS1iYAAAAAAAAAAAAAwCc2qPN06w=="
     },
     {
       type = "objectgroup",
@@ -65,6 +74,58 @@ return {
           x = 45,
           y = 269,
           width = 27,
+          height = 27,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 3,
+          name = "Martian",
+          type = "",
+          shape = "rectangle",
+          x = 134,
+          y = 271,
+          width = 20,
+          height = 27,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 5,
+          name = "Martian",
+          type = "",
+          shape = "rectangle",
+          x = 434,
+          y = 283,
+          width = 20,
+          height = 27,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 6,
+          name = "Martian",
+          type = "",
+          shape = "rectangle",
+          x = 693,
+          y = 284,
+          width = 20,
+          height = 27,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 7,
+          name = "Martian",
+          type = "",
+          shape = "rectangle",
+          x = 850,
+          y = 281,
+          width = 20,
           height = 27,
           rotation = 0,
           visible = true,

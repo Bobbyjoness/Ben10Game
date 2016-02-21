@@ -4,13 +4,12 @@ local Play = {}
 local sti = require "libs.STI"
 local bump = require "bump.bump"
 
-local Player = require "classes.player"
-local cols
+local Player  = require "classes.player"
+local Martian = require "classes.martian"
 local player
-local GRAVITY = 9.8
 local map
 local world
-
+local enemies = {}
 
 function Play:init() -- run only once
 
@@ -26,19 +25,20 @@ function Play:init() -- run only once
     for k, object in pairs(map.objects) do
         if object.name == "PlayerSpawn" then
             playerSpawn = object
-            break
+        elseif object.name == "Martian" then
+        	local martian = Martian(object.x, object.y, world)
+        	martian:setAcceleration(nil,map.properties.GRAVITY*martian.mass)
+   			martian:setFriction(map.properties.friction)
+   			table.insert(enemies,martian)
         end
     end
 
     -- Remove unneeded object layer
     map:removeLayer("Spawn")
 
-    player = Player(playerSpawn.x, playerSpawn.y, 32, 32, 0, 0, 200, 200, 100, world)
-    player:setAcceleration(nil,GRAVITY*player.mass)
+    player = Player(playerSpawn.x, playerSpawn.y, 32, 32, 150, 400, 100, world)
+    player:setAcceleration(nil,map.properties.GRAVITY*player.mass)
     player:setFriction(map.properties.friction)
-
-	world:add(player, player.x, player.y, player.w, player.h)
-
 end
 
 function Play:enter( previous, ... ) -- run every time the state is entered
@@ -48,12 +48,15 @@ end
 function Play:update(dt)
 	map:update(dt)
 	player:update(dt)
+	for i,v in ipairs(enemies) do
+		v:update(dt)
+	end
 
 	if love.keyboard.isDown("d") then
-		player:setAcceleration(100)
+		player:setAcceleration(200)
 		player:setDirection(1)
 	elseif love.keyboard.isDown("a") then
-		player:setAcceleration(-100)
+		player:setAcceleration(-200)
 		player:setDirection(-1)
 	end
 
@@ -63,7 +66,10 @@ function Play:draw()
 	love.graphics.setColor(255,255,255)
 	map:setDrawRange(0, 0, 800, 600)
 	map:draw()
-	love.graphics.rectangle( "fill",player.x,player.y,player.w,player.h )
+	player:draw()
+	for i,v in ipairs(enemies) do
+		v:draw()
+	end
 	love.graphics.setColor(255, 255, 0, 255)
 	love.graphics.setFont(love.graphics.newFont(12))
 	love.graphics.print(love.timer.getFPS())
@@ -71,7 +77,7 @@ end
 
 function Play:keypressed(key)
 	if key == "space" and player.grounded then
-		player:setVelocity(nil,-2000)
+		player:setVelocity(nil,-3000)
 		player.grounded = false
 	end
 end

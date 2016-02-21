@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="21" tileheight="21" nextobjectid="3">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="40" tilewidth="21" tileheight="21" nextobjectid="8">
  <properties>
-  <property name="friction" value=".5"/>
+  <property name="GRAVITY" value="9.8"/>
+  <property name="airComp" value="Oxygen"/>
+  <property name="friction" value="1.4"/>
  </properties>
  <tileset firstgid="1" name="world" tilewidth="21" tileheight="21" spacing="2" margin="2" tilecount="900">
   <image source="../assets/spritesheet.png" width="692" height="692"/>
+  <tile id="2">
+   <properties>
+    <property name="hat" value="1"/>
+   </properties>
+  </tile>
  </tileset>
- <layer name="collidableWorld" width="40" height="40">
+ <layer name="collidableWorld" width="120" height="40">
   <properties>
    <property name="collidable" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztw0EJAAAIBLADk9i/pCV8CG6wBACATXV8q6qq6oMDlch8OQ==
+   eJztzsEJACAMALFCwT0E959Rn91ALTnI/yIkSZIkSZIk6b3GkcW6uyNJUpuS1iYAAAAAAAAAAAAAwCc2qPN06w==
   </data>
  </layer>
  <objectgroup name="Spawn">
   <object id="1" name="PlayerSpawn" x="45" y="269" width="27" height="27"/>
+  <object id="3" name="Martian" x="134" y="271" width="20" height="27"/>
+  <object id="5" name="Martian" x="434" y="283" width="20" height="27"/>
+  <object id="6" name="Martian" x="693" y="284" width="20" height="27"/>
+  <object id="7" name="Martian" x="850" y="281" width="20" height="27"/>
  </objectgroup>
 </map>
