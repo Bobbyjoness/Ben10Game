@@ -2,7 +2,7 @@
 local Gamestate = require 'hump.gamestate'
 
 --mycode
-local playState = require 'States.play'
+local playState = require 'states.play'
 
 function love.load()
 	Gamestate.switch(playState)
