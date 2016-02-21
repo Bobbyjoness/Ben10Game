@@ -78,7 +78,6 @@ end
 function Play:keypressed(key)
 	if key == "space" and player.grounded then
 		player:setVelocity(nil,-3000)
-		player.grounded = false
 	end
 end
 

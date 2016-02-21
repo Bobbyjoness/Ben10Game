@@ -50,6 +50,7 @@ function Player:update(dt)
 	self.y = self.y + self.yvel*dt
 
 	self.x, self.y, cols = self.world:move( self, self.x, self.y )
+	self.grounded = false
 	for i,v in ipairs (cols) do
 		if cols[i].normal.y == -1 then
 			self.yvel = 0

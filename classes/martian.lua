@@ -12,7 +12,7 @@ function Martian:init(x, y, world)--we dont need as many things that the player 
 	self.h       = 50
 	self.xAccel  = 0
 	self.yAccel  = 0
-	self.maxVelX = 100
+	self.maxVelX = 140
 	self.maxVelY = 400
 	self.mass    = 40
 	self.world   = world

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="40" tilewidth="21" tileheight="21" nextobjectid="8">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="40" tilewidth="21" tileheight="21" nextobjectid="24">
  <properties>
   <property name="GRAVITY" value="9.8"/>
   <property name="airComp" value="Oxygen"/>
@@ -23,9 +23,6 @@
  </layer>
  <objectgroup name="Spawn">
   <object id="1" name="PlayerSpawn" x="45" y="269" width="27" height="27"/>
-  <object id="3" name="Martian" x="134" y="271" width="20" height="27"/>
-  <object id="5" name="Martian" x="434" y="283" width="20" height="27"/>
-  <object id="6" name="Martian" x="693" y="284" width="20" height="27"/>
-  <object id="7" name="Martian" x="850" y="281" width="20" height="27"/>
+  <object id="23" name="Martian" x="387" y="252" width="34" height="53"/>
  </objectgroup>
 </map>
