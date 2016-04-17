@@ -6,6 +6,8 @@ local Class = require('hump.class')
 local Martian = Class{}
 
 function Martian:init(x, y, world)--we dont need as many things that the player class does.
+	self.name    = "martian" 
+	
 	self.x       = x
 	self.y       = y
 	self.w       = 32

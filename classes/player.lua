@@ -24,7 +24,50 @@ function Player:init(x, y, w, h, maxVelX, maxVelY, mass, world)
 	self.grounded = false
 	self.friction = 0
 
+	self.dead = false
+
 	world:add(self, self.x, self.y, self.w, self.h)
+end
+
+function Player:setHealth(amount, max)
+	local oldMax      = self.healthMax or 100
+	self.healthMax    = max or self.healthMax or 100
+	self.healthAmount = amount or (self.healthAmount and (self.healthAmount/oldMax)*self.healthMax) or 100
+	if self.healthAmount < 0 then
+		self.healthAmount = 0
+	end
+end
+
+function Player:getHealthStats()
+	if self.healthMax then
+		return self.healthAmount,self.healthMax
+	else
+		error("Health was not initialized for : " .. self.name)
+	end
+end
+
+function Player:applyDamage(amount)
+	local healthAmount = self:getHealthStats()
+	self:setHealth(healthAmount - amount)
+end
+
+function Player:checkHealth()
+	local healthAmount = self:getHealthStats()
+	print(healthAmount)
+	if healthAmount <= 0 then 
+		print('apple')
+		self:die() 
+		self:setHealth(0)
+	end
+end
+
+function Player:die()
+	print("dead")
+	self.dead = true
+end
+
+function Player:checkDead()
+	return self.dead
 end
 
 function Player:update(dt)
@@ -58,8 +101,12 @@ function Player:update(dt)
 		elseif cols[i].normal.y == 1 then
 			self.yvel = -self.yvel/4
 		end
+		if v.other.name then
+			self:applyDamage(10)
+		end
 	end
 
+	self:checkHealth()
 end
 
 function Player:draw()

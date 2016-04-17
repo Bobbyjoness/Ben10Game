@@ -5,11 +5,13 @@ local Play = {}
 local sti    = require "libs.STI"
 local bump   = require "bump.bump"
 local Camera = require "hump.camera"
+local GS     = require "hump.gamestate"
 local camera = Camera()
 
 --My code
-local Player  = require "classes.player"
-local Martian = require "classes.martian"
+local Player      = require "classes.player"
+local Martian     = require "classes.martian"
+local LoseOverlay = require "states.loseOverlay"
 local player
 local map
 local world
@@ -40,9 +42,10 @@ function Play:init() -- run only once
     -- Remove unneeded object layer
     map:removeLayer("Spawn")
 
-    player = Player(playerSpawn.x, playerSpawn.y, 32, 32, 150, 400, 100, world)
+    player = Player(playerSpawn.x, playerSpawn.y, 32, 32, 300, 400, 100, world)
     player:setAcceleration(nil,map.properties.GRAVITY*player.mass)
     player:setFriction(map.properties.friction)
+    player:setHealth()
 end
 
 function Play:enter( previous, ... ) -- run every time the state is entered
@@ -52,25 +55,28 @@ end
 function Play:update(dt)
 	map:update(dt)
 	player:update(dt)
+	if player:checkDead() then
+		GS.push(LoseOverlay)
+	end
+
 	for i,v in ipairs(enemies) do
 		v:update(dt)
 	end
 
 	if love.keyboard.isDown("d") then
-		player:setAcceleration(200)
+		player:setAcceleration(300)
 		player:setDirection(1)
 	elseif love.keyboard.isDown("a") then
-		player:setAcceleration(-200)
+		player:setAcceleration(-300)
 		player:setDirection(-1)
 	end
 
 	camera:lockX(player.x)
-
 end
 
 function Play:draw()
 	camera:attach()
-	love.graphics.setColor(255,255,255)
+	love.graphics.setColor(255, 255, 255)
 	map:setDrawRange(0, 0, 800, 600)
 	map:draw()
 	player:draw()
@@ -78,6 +84,12 @@ function Play:draw()
 		v:draw()
 	end
 	camera:detach()
+
+	local healthAmount, healthMax = player:getHealthStats()
+	love.graphics.setColor(255, 255, 255)
+	love.graphics.rectangle("fill", 19, 19, healthMax+1, 22)
+	love.graphics.setColor(50, 255, 50)
+	love.graphics.rectangle("fill", 20, 20, healthAmount, 20)
 	love.graphics.setColor(255, 255, 0, 255)
 	love.graphics.setFont(love.graphics.newFont(12))
 	love.graphics.print(love.timer.getFPS())
