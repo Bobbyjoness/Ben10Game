@@ -25,11 +25,15 @@ function Martian:init(x, y, world)--we dont need as many things that the player 
 	self.grounded = false
 	self.friction = 0
 
+	self.dead = false
+
 	self.world:add(self, self.x, self.y, self.w, self.h)
 end
 
 function Martian:update(dt)
 	self:AI()
+	self:checkHealth(dt)
+	self:attackUpdate(dt)
 	self.xvel = self.xvel + self.xAccel*dt
 	self.yvel = self.yvel + self.yAccel*dt
 
@@ -107,5 +111,75 @@ function Martian:AI()
 		end
 	end
 end
+
+function Martian:setHealth(amount, max)
+	local oldMax      = self.healthMax or 100
+	self.healthMax    = max or self.healthMax or 100
+	self.healthAmount = amount or (self.healthAmount and (self.healthAmount/oldMax)*self.healthMax) or 100
+	if self.healthAmount < 0 then
+		self.healthAmount = 0
+	end
+end
+
+function Martian:getHealthStats()
+	if self.healthMax then
+		return self.healthAmount,self.healthMax
+	else
+		error("Health was not initialized for : " .. self.name)
+	end
+end
+
+function Martian:applyDamage(amount)
+	local healthAmount = self:getHealthStats()
+	self:setHealth(healthAmount - amount)
+end
+
+function Martian:checkHealth()
+	local healthAmount = self:getHealthStats()
+	if healthAmount <= 0 then 
+		self:die() 
+		self:setHealth(0)
+	end
+end
+
+function Martian:die()
+	self.dead = true
+end
+
+function Martian:checkDead()
+	return self.dead
+end
+
+function Martian:setMeleeAttack(range, damage, speed)
+	self.attackRange = range or 15
+	self.attackDamage = damage or 5
+	self.attackSpeed  = speed or 1
+	self.attackTimer  = 0
+end
+
+function Martian:attack()
+	if self.attackTimer <= 0 then
+		self.attackTimer = self.attackSpeed
+		local items, len = self.world:queryRect((self.x + self.w/2), self.y, self.attackRange*self.direction, self.h)
+		for i,v in ipairs(items) do
+			if v.healthAmount and v.name == "Player" then
+				v:attacked(damage)	
+			end
+		end
+	end	
+end
+
+function Martian:attackUpdate(dt)
+	if self.attackTimer > 0 then
+		self.attackTimer = self.attackTimer - dt
+	elseif self.attackTimer == nil then
+		error("This attack was not initialized for: " .. self.name)	
+	end
+end
+
+function Martian:attacked()
+	self:die()
+end
+
 
 return Martian

@@ -35,6 +35,8 @@ function Play:init() -- run only once
         	local martian = Martian(object.x, object.y, world)
         	martian:setAcceleration(nil,map.properties.GRAVITY*martian.mass)
    			martian:setFriction(map.properties.friction)
+   			martian:setHealth(10,10)
+   			martian:setMeleeAttack()
    			table.insert(enemies,martian)
         end
     end
@@ -46,6 +48,7 @@ function Play:init() -- run only once
     player:setAcceleration(nil,map.properties.GRAVITY*player.mass)
     player:setFriction(map.properties.friction)
     player:setHealth()
+    player:setMeleeAttack(25,10,.25)
 end
 
 function Play:enter( previous, ... ) -- run every time the state is entered
@@ -59,9 +62,13 @@ function Play:update(dt)
 		GS.push(LoseOverlay)
 	end
 
-	for i,v in ipairs(enemies) do
-		v:update(dt)
-	end
+	for i=#enemies,1,-1 do
+		local enemy = enemies[i]
+		enemy:update(dt)
+		if enemy:checkDead() then
+			enemies[i] = nil
+		end
+	end	
 
 	if love.keyboard.isDown("d") then
 		player:setAcceleration(300)
@@ -97,7 +104,10 @@ end
 
 function Play:keypressed(key)
 	if key == "space" and player.grounded then
-		player:setVelocity(nil,-3000)
+		player:setVelocity(nil,-3000)	
+	end
+	if key == "q" then
+		player:attack()
 	end
 end
 
