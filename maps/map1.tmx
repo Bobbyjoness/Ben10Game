@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="40" tilewidth="21" tileheight="21" nextobjectid="24">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="40" tilewidth="21" tileheight="21" nextobjectid="33">
  <properties>
   <property name="GRAVITY" value="9.8"/>
   <property name="airComp" value="Oxygen"/>
@@ -18,11 +18,16 @@
    <property name="collidable" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzsEJACAMALFCwT0E959Rn91ALTnI/yIkSZIkSZIk6b3GkcW6uyNJUpuS1iYAAAAAAAAAAAAAwCc2qPN06w==
+   eJzt1MsJgDAQQMFgwD4Ey7QvwUosx3jz4AdCRGLmwVxDYNkNQZIktdSSzCfWLz8lNVqfdA/GjHenl6ju7uZozmq5q1ucc38llW/f0XhgNyVJKlPk1wYAAAAAAAAAAAAAgEps5H6Hkg==
   </data>
  </layer>
  <objectgroup name="Spawn">
   <object id="1" name="PlayerSpawn" x="45" y="269" width="27" height="27"/>
-  <object id="23" name="Martian" x="387" y="252" width="34" height="53"/>
+  <object id="27" name="Martian" x="85" y="253" width="34" height="53"/>
+  <object id="28" name="Martian" x="85" y="253" width="34" height="53"/>
+  <object id="29" name="Martian" x="703" y="208" width="34" height="53"/>
+  <object id="30" name="Martian" x="455" y="230" width="34" height="53"/>
+  <object id="31" name="Martian" x="455" y="-13" width="34" height="53"/>
+  <object id="32" name="Martian" x="609" y="209" width="34" height="53"/>
  </objectgroup>
 </map>

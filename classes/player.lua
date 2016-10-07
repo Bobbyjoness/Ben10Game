@@ -169,8 +169,8 @@ function Player:attackUpdate(dt)
 	end
 end
 
-function Player:attacked()
-
+function Player:attacked(damage)
+	self:applyDamage(damage)
 end
 
 return Player

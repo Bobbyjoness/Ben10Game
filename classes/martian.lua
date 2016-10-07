@@ -65,6 +65,7 @@ function Martian:update(dt)
 			self.yvel = -self.yvel/4
 		end
 	end
+	self:attack()
 end
 
 function Martian:draw()
@@ -151,7 +152,7 @@ function Martian:checkDead()
 end
 
 function Martian:setMeleeAttack(range, damage, speed)
-	self.attackRange = range or 15
+	self.attackRange = range or 100
 	self.attackDamage = damage or 5
 	self.attackSpeed  = speed or 1
 	self.attackTimer  = 0
@@ -159,11 +160,12 @@ end
 
 function Martian:attack()
 	if self.attackTimer <= 0 then
+
 		self.attackTimer = self.attackSpeed
 		local items, len = self.world:queryRect((self.x + self.w/2), self.y, self.attackRange*self.direction, self.h)
 		for i,v in ipairs(items) do
-			if v.healthAmount and v.name == "Player" then
-				v:attacked(damage)	
+			if v.name == "Player" then
+				v:attacked(self.attackDamage)	
 			end
 		end
 	end	

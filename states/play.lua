@@ -78,7 +78,7 @@ function Play:update(dt)
 		player:setDirection(-1)
 	end
 
-	camera:lockX(player.x)
+	camera:lockX(math.floor(player.x))
 end
 
 function Play:draw()

@@ -8,7 +8,7 @@ return {
   height = 40,
   tilewidth = 21,
   tileheight = 21,
-  nextobjectid = 24,
+  nextobjectid = 33,
   properties = {
     ["GRAVITY"] = "9.8",
     ["airComp"] = "Oxygen",
@@ -57,7 +57,7 @@ return {
       },
       encoding = "base64",
       compression = "zlib",
-      data = "eJztzsEJACAMALFCwT0E959Rn91ALTnI/yIkSZIkSZIk6b3GkcW6uyNJUpuS1iYAAAAAAAAAAAAAwCc2qPN06w=="
+      data = "eJzt1MsJgDAQQMFgwD4Ey7QvwUosx3jz4AdCRGLmwVxDYNkNQZIktdSSzCfWLz8lNVqfdA/GjHenl6ju7uZozmq5q1ucc38llW/f0XhgNyVJKlPk1wYAAAAAAAAAAAAAgEps5H6Hkg=="
     },
     {
       type = "objectgroup",
@@ -80,12 +80,77 @@ return {
           properties = {}
         },
         {
-          id = 23,
+          id = 27,
           name = "Martian",
           type = "",
           shape = "rectangle",
-          x = 387,
-          y = 252,
+          x = 85,
+          y = 253,
+          width = 34,
+          height = 53,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 28,
+          name = "Martian",
+          type = "",
+          shape = "rectangle",
+          x = 85,
+          y = 253,
+          width = 34,
+          height = 53,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 29,
+          name = "Martian",
+          type = "",
+          shape = "rectangle",
+          x = 703,
+          y = 208,
+          width = 34,
+          height = 53,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 30,
+          name = "Martian",
+          type = "",
+          shape = "rectangle",
+          x = 455,
+          y = 230,
+          width = 34,
+          height = 53,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 31,
+          name = "Martian",
+          type = "",
+          shape = "rectangle",
+          x = 455,
+          y = -13,
+          width = 34,
+          height = 53,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 32,
+          name = "Martian",
+          type = "",
+          shape = "rectangle",
+          x = 609,
+          y = 209,
           width = 34,
           height = 53,
           rotation = 0,
