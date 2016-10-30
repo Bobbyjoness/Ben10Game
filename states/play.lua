@@ -12,6 +12,7 @@ local camera = Camera()
 local Player      = require "classes.player"
 local Martian     = require "classes.martian"
 local bigDude     = require "classes.bigDude"
+local savageBrute = require "classes.savageBrute"
 local LoseOverlay = require "states.loseOverlay"
 local player
 local map
@@ -39,6 +40,13 @@ function Play:init() -- run only once
    			martian:setHealth(20,20)
    			martian:setMeleeAttack(32,5,.5)
    			table.insert(enemies,martian)
+   		elseif object.name == "savageBrute" then
+        	local savageBrute = savageBrute(object.x, object.y, world)
+        	savageBrute:setAcceleration(nil,map.properties.GRAVITY*savageBrute.mass)
+   			savageBrute:setFriction(map.properties.friction)
+   			savageBrute:setHealth(10,10)
+   			savageBrute:setMeleeAttack(7,.1,.5)
+   			table.insert(enemies,savageBrute)
    		elseif object.name == "bigDude" then
         	local bigDude = bigDude(object.x, object.y, world)
         	bigDude:setAcceleration(nil,map.properties.GRAVITY*bigDude.mass)
