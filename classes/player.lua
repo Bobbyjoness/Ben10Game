@@ -152,10 +152,15 @@ end
 function Player:attack()
 	if self.attackTimer <= 0 then
 		self.attackTimer = self.attackSpeed
-		local items, len = self.world:queryRect((self.x + self.w/2), self.y, self.attackRange*self.direction, self.h)
+		local items, len
+		if self.direction == -1 then
+			items, len = self.world:queryRect((self.x + self.w/2) - self.attackRange, self.y, self.attackRange, self.h)
+		elseif self.direction == 1 then
+			items, len = self.world:queryRect((self.x + self.w/2), self.y, self.attackRange, self.h)
+		end
 		for i,v in ipairs(items) do
 			if v.healthAmount and not (v.name == self.name) then
-				v:attacked(damage)	
+				v:attacked(self.attackDamage)	
 			end
 		end
 	end	
@@ -170,7 +175,7 @@ function Player:attackUpdate(dt)
 end
 
 function Player:attacked(damage)
-	self:applyDamage(damage)
+	self:applyDamage(self.attackDamage)
 end
 
 return Player

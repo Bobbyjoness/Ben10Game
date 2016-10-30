@@ -22,7 +22,7 @@ function Play:init() -- run only once
     -- Set Physics Meter
 	world = bump.newWorld(64)
 	-- Load map
-	map = sti.new("maps/map1.lua", { "bump" })
+	map = sti("maps/map1.lua", { "bump" })
 	
 	map:bump_init(world)
 
@@ -35,8 +35,8 @@ function Play:init() -- run only once
         	local martian = Martian(object.x, object.y, world)
         	martian:setAcceleration(nil,map.properties.GRAVITY*martian.mass)
    			martian:setFriction(map.properties.friction)
-   			martian:setHealth(10,10)
-   			martian:setMeleeAttack()
+   			martian:setHealth(20,20)
+   			martian:setMeleeAttack(32,5,.5)
    			table.insert(enemies,martian)
         end
     end
@@ -48,7 +48,7 @@ function Play:init() -- run only once
     player:setAcceleration(nil,map.properties.GRAVITY*player.mass)
     player:setFriction(map.properties.friction)
     player:setHealth()
-    player:setMeleeAttack(25,10,.25)
+    player:setMeleeAttack(32,5,.45)
 end
 
 function Play:enter( previous, ... ) -- run every time the state is entered
@@ -66,7 +66,8 @@ function Play:update(dt)
 		local enemy = enemies[i]
 		enemy:update(dt)
 		if enemy:checkDead() then
-			enemies[i] = nil
+			world:remove(enemy)
+			table.remove(enemies, i)
 		end
 	end	
 
@@ -84,8 +85,9 @@ end
 function Play:draw()
 	camera:attach()
 	love.graphics.setColor(255, 255, 255)
-	map:setDrawRange(0, 0, 800, 600)
+	map:setDrawRange(player.x - 800, 0, player.x + 800, player.y + 600)
 	map:draw()
+	map:bump_draw(world)
 	player:draw()
 	for i,v in ipairs(enemies) do
 		v:draw()

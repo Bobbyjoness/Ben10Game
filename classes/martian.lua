@@ -26,7 +26,6 @@ function Martian:init(x, y, world)--we dont need as many things that the player 
 	self.friction = 0
 
 	self.dead = false
-
 	self.world:add(self, self.x, self.y, self.w, self.h)
 end
 
@@ -36,7 +35,6 @@ function Martian:update(dt)
 	self:attackUpdate(dt)
 	self.xvel = self.xvel + self.xAccel*dt
 	self.yvel = self.yvel + self.yAccel*dt
-
 	if self.grounded then
 		self.xvel = self.xvel - self.mass*self.friction*self.direction*dt
 	end
@@ -44,9 +42,11 @@ function Martian:update(dt)
 	if self.direction == 1 then
 		if self.xvel > self.maxVelX then self.xvel = self.maxVelX end
 		if self.xvel < 0 then self.xvel = 0 end
-	else
+	elseif self.direction == -1 then
 		if self.xvel < -self.maxVelX then self.xvel = -self.maxVelX end
 		if self.xvel > 0 then self.xvel = 0 end
+	else
+		error("Direction needs to 1 or -1. Direction is: " .. self.direction)
 	end	
 
 	if self.yvel > self.maxVelY then self.yvel = self.maxVelY end
@@ -71,6 +71,7 @@ end
 function Martian:draw()
 	love.graphics.setColor(255,0,0)
 	love.graphics.rectangle( "fill",self.x,self.y,self.w,self.h )
+	love.graphics.print(self.healthAmount .. "/" .. self.healthMax, self.x, self.y - 20)
 end
 
 function Martian:setAcceleration(x, y)
@@ -99,8 +100,9 @@ end
 function Martian:AI()
 	local items, len = self.world:queryRect(self.x-100, self.y-100, 200 + self.w, 200 + self.h) --query the world for a player. (so we can kill him(que the evil laugh))
 	self:setAcceleration(0)
+
 	for i,v in ipairs(items) do
-		if v.name == "Player" then
+		if v.name == "Player" and self.grounded then
 			if v.x < self.x then
 				self:setAcceleration(-500)
 				self:setDirection(-1)
@@ -162,7 +164,12 @@ function Martian:attack()
 	if self.attackTimer <= 0 then
 
 		self.attackTimer = self.attackSpeed
-		local items, len = self.world:queryRect((self.x + self.w/2), self.y, self.attackRange*self.direction, self.h)
+		local items, len 
+		if self.direction == -1 then
+			items, len = self.world:queryRect((self.x + self.w/2) - self.attackRange, self.y, self.attackRange, self.h)
+		elseif self.direction == 1 then
+			items, len = self.world:queryRect((self.x + self.w/2), self.y, self.attackRange, self.h)
+		end
 		for i,v in ipairs(items) do
 			if v.name == "Player" then
 				v:attacked(self.attackDamage)	
@@ -179,8 +186,10 @@ function Martian:attackUpdate(dt)
 	end
 end
 
-function Martian:attacked()
-	self:die()
+function Martian:attacked(damage)
+	self:setVelocity(-150*self.direction*damage, -100*damage)
+	self.grounded = false
+	self:applyDamage(damage)
 end
 
 
