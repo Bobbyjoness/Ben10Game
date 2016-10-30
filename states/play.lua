@@ -12,6 +12,7 @@ local camera = Camera()
 local Player      = require "classes.player"
 local Martian     = require "classes.martian"
 local bigDude     = require "classes.bigDude"
+local savageBrute = require "classes.savageBrute"
 local LoseOverlay = require "states.loseOverlay"
 local player
 local map
@@ -39,12 +40,19 @@ function Play:init() -- run only once
    			martian:setHealth(20,20)
    			martian:setMeleeAttack(32,5,.5)
    			table.insert(enemies,martian)
+   		elseif object.name == "savageBrute" then
+        	local savageBrute = savageBrute(object.x, object.y, world)
+        	savageBrute:setAcceleration(nil,map.properties.GRAVITY*savageBrute.mass)
+   			savageBrute:setFriction(map.properties.friction)
+   			savageBrute:setHealth(10,10)
+   			savageBrute:setMeleeAttack(7,.1,.5)
+   			table.insert(enemies,savageBrute)
    		elseif object.name == "bigDude" then
         	local bigDude = bigDude(object.x, object.y, world)
         	bigDude:setAcceleration(nil,map.properties.GRAVITY*bigDude.mass)
    			bigDude:setFriction(map.properties.friction)
-   			bigDude:setHealth(100,100)
-   			bigDude:setMeleeAttack(32,15,.1)
+   			bigDude:setHealth(45,45)
+   			bigDude:setMeleeAttack(64,15,1)
    			table.insert(enemies,bigDude)
         end
     end
@@ -91,6 +99,14 @@ function Play:update(dt)
 end
 
 function Play:draw()
+	--this will tell how many enemies are left
+	love.graphics.setColor(255,255,255)
+	if #enemies == 1 then
+		love.graphics.print("There is only "..#enemies.."\nenemy left", 700, 25) 
+	else
+		love.graphics.print("There are "..#enemies.."\nenemies left", 700, 25) --to show how many enemies are left
+	end
+
 	camera:attach()
 	love.graphics.setColor(255, 255, 255)
 	map:setDrawRange(player.x - 800, 0, player.x + 800, player.y + 600)
