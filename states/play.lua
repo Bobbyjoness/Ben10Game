@@ -11,6 +11,7 @@ local camera = Camera()
 --My code
 local Player      = require "classes.player"
 local Martian     = require "classes.martian"
+local bigDude     = require "classes.bigDude"
 local LoseOverlay = require "states.loseOverlay"
 local player
 local map
@@ -38,6 +39,13 @@ function Play:init() -- run only once
    			martian:setHealth(20,20)
    			martian:setMeleeAttack(32,5,.5)
    			table.insert(enemies,martian)
+   		elseif object.name == "bigDude" then
+        	local bigDude = bigDude(object.x, object.y, world)
+        	bigDude:setAcceleration(nil,map.properties.GRAVITY*bigDude.mass)
+   			bigDude:setFriction(map.properties.friction)
+   			bigDude:setHealth(100,100)
+   			bigDude:setMeleeAttack(32,15,.1)
+   			table.insert(enemies,bigDude)
         end
     end
 
