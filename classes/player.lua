@@ -5,6 +5,7 @@ local Class = require('hump.class')
 
 local Player = Class{}
 
+--Players attributes
 function Player:init(x, y, w, h, maxVelX, maxVelY, mass, world)
 	self.name    = "Player" 
 	self.x       = x

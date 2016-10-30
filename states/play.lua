@@ -43,8 +43,8 @@ function Play:init() -- run only once
         	local bigDude = bigDude(object.x, object.y, world)
         	bigDude:setAcceleration(nil,map.properties.GRAVITY*bigDude.mass)
    			bigDude:setFriction(map.properties.friction)
-   			bigDude:setHealth(100,100)
-   			bigDude:setMeleeAttack(32,15,.1)
+   			bigDude:setHealth(45,45)
+   			bigDude:setMeleeAttack(64,15,1)
    			table.insert(enemies,bigDude)
         end
     end
@@ -91,6 +91,14 @@ function Play:update(dt)
 end
 
 function Play:draw()
+	--this will tell how many enemies are left
+	love.graphics.setColor(255,255,255)
+	if #enemies == 1 then
+		love.graphics.print("There is only "..#enemies.."\nenemy left", 700, 25) 
+	else
+		love.graphics.print("There are "..#enemies.."\nenemies left", 700, 25) --to show how many enemies are left
+	end
+
 	camera:attach()
 	love.graphics.setColor(255, 255, 255)
 	map:setDrawRange(player.x - 800, 0, player.x + 800, player.y + 600)
