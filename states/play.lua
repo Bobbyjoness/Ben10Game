@@ -100,30 +100,34 @@ end
 
 function Play:draw()
 	--this will tell how many enemies are left
-	love.graphics.setColor(255,255,255)
+	love.graphics.setColor(1,1,1)
 	if #enemies == 1 then
 		love.graphics.print("There is only "..#enemies.."\nenemy left", 700, 25) 
 	else
 		love.graphics.print("There are "..#enemies.."\nenemies left", 700, 25) --to show how many enemies are left
 	end
 
-	camera:attach()
-	love.graphics.setColor(255, 255, 255)
-	map:setDrawRange(player.x - 800, 0, player.x + 800, player.y + 600)
-	map:draw()
-	map:bump_draw(world)
-	player:draw()
-	for i,v in ipairs(enemies) do
-		v:draw()
-	end
-	camera:detach()
+	local w, h = love.graphics.getDimensions( )
+	love.graphics.setColor(1, 1, 1)
+	map:draw(w/2-player.x, h/2 - player.y)
+	map:bump_draw(world, w/2-player.x, h/2 - player.y)
+	
+	
+
+	love.graphics.push()
+		love.graphics.translate(w/2-player.x, h/2 - player.y)
+		player:draw()
+		for i,v in ipairs(enemies) do
+			v:draw()
+		end
+	love.graphics.pop()
 
 	local healthAmount, healthMax = player:getHealthStats()
-	love.graphics.setColor(255, 255, 255)
+	love.graphics.setColor(1, 1, 1)
 	love.graphics.rectangle("fill", 19, 19, healthMax+1, 22)
-	love.graphics.setColor(50, 255, 50)
+	love.graphics.setColor(.15, 1, .15)
 	love.graphics.rectangle("fill", 20, 20, healthAmount, 20)
-	love.graphics.setColor(255, 255, 0, 255)
+	love.graphics.setColor(1, 1, 0, 1)
 	love.graphics.setFont(love.graphics.newFont(12))
 	love.graphics.print(love.timer.getFPS())
 end
