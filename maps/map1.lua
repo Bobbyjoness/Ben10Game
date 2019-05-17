@@ -1,13 +1,14 @@
 return {
-  version = "1.1",
+  version = "1.2",
   luaversion = "5.1",
-  tiledversion = "0.17.0",
+  tiledversion = "1.2.4",
   orientation = "orthogonal",
   renderorder = "right-down",
   width = 120,
   height = 40,
   tilewidth = 21,
   tileheight = 21,
+  nextlayerid = 3,
   nextobjectid = 55,
   properties = {
     ["GRAVITY"] = "9.8",
@@ -22,12 +23,18 @@ return {
       tileheight = 21,
       spacing = 2,
       margin = 2,
+      columns = 30,
       image = "../assets/spritesheet.png",
       imagewidth = 692,
       imageheight = 692,
       tileoffset = {
         x = 0,
         y = 0
+      },
+      grid = {
+        orientation = "orthogonal",
+        width = 21,
+        height = 21
       },
       properties = {},
       terrains = {},
@@ -45,6 +52,7 @@ return {
   layers = {
     {
       type = "tilelayer",
+      id = 1,
       name = "collidableWorld",
       x = 0,
       y = 0,
@@ -63,6 +71,7 @@ return {
     },
     {
       type = "objectgroup",
+      id = 2,
       name = "Spawn",
       visible = true,
       opacity = 1,
